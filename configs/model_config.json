@@ -1,0 +1,77 @@
+{
+  "ensemble_models": [
+    {
+      "type": "xgboost",
+      "name": "XGBoost_Main",
+      "params": {
+        "n_estimators": 300,
+        "max_depth": 8,
+        "learning_rate": 0.05,
+        "subsample": 0.8,
+        "colsample_bytree": 0.8,
+        "reg_alpha": 0.1,
+        "reg_lambda": 1.0,
+        "random_state": 42
+      }
+    },
+    {
+      "type": "lightgbm", 
+      "name": "LightGBM_Main",
+      "params": {
+        "n_estimators": 300,
+        "max_depth": 8,
+        "learning_rate": 0.05,
+        "subsample": 0.8,
+        "colsample_bytree": 0.8,
+        "reg_alpha": 0.1,
+        "reg_lambda": 1.0,
+        "random_state": 42
+      }
+    },
+    {
+      "type": "catboost",
+      "name": "CatBoost_Main", 
+      "params": {
+        "iterations": 300,
+        "depth": 8,
+        "learning_rate": 0.05,
+        "reg_lambda": 1.0,
+        "random_state": 42
+      }
+    },
+    {
+      "type": "randomforest",
+      "name": "RandomForest_Main",
+      "params": {
+        "n_estimators": 200,
+        "max_depth": 12,
+        "min_samples_split": 5,
+        "min_samples_leaf": 2,
+        "random_state": 42
+      }
+    },
+    {
+      "type": "linear",
+      "name": "Ridge_Main",
+      "params": {
+        "model_type": "ridge",
+        "alpha": 1.0,
+        "random_state": 42
+      }
+    }
+  ],
+  "ensemble_config": {
+    "method": "weighted",
+    "weights": [0.3, 0.3, 0.2, 0.1, 0.1]
+  },
+  "feature_selection": {
+    "method": "correlation",
+    "max_features": 100,
+    "min_correlation": 0.01
+  },
+  "validation": {
+    "initial_train_size": 252,
+    "step_size": 21,
+    "forecast_horizon": 1
+  }
+}

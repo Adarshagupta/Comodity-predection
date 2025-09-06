@@ -1,0 +1,74 @@
+{
+  "data_sources": {
+    "lme": {
+      "file_path": "lme_prices.csv",
+      "price_columns": ["copper_price", "aluminum_price", "zinc_price", "lead_price", "nickel_price"],
+      "date_column": "date",
+      "frequency": "daily"
+    },
+    "jpx": {
+      "file_path": "jpx_data.csv", 
+      "price_columns": ["nikkei_close", "topix_close"],
+      "date_column": "date",
+      "frequency": "daily"
+    },
+    "us_stock": {
+      "file_path": "us_stock_data.csv",
+      "price_columns": ["sp500_close", "nasdaq_close", "dow_close"],
+      "date_column": "date", 
+      "frequency": "daily"
+    },
+    "forex": {
+      "file_path": "forex_rates.csv",
+      "price_columns": ["usd_jpy_rate", "eur_usd_rate", "gbp_usd_rate"],
+      "date_column": "date",
+      "frequency": "daily"
+    }
+  },
+  "feature_engineering": {
+    "asset_pairs": [
+      ["lme_copper_price", "lme_aluminum_price"],
+      ["lme_copper_price", "lme_zinc_price"], 
+      ["lme_aluminum_price", "lme_zinc_price"],
+      ["jpx_nikkei_close", "jpx_topix_close"],
+      ["us_stock_sp500_close", "us_stock_nasdaq_close"],
+      ["forex_usd_jpy_rate", "forex_eur_usd_rate"]
+    ],
+    "market_prefixes": ["lme", "jpx", "us_stock", "forex"],
+    "technical_indicators": {
+      "moving_averages": [5, 10, 20, 50],
+      "rsi_periods": [14, 21],
+      "bollinger_periods": [20],
+      "macd_params": {"fast": 12, "slow": 26, "signal": 9}
+    },
+    "volatility_windows": [5, 10, 20, 60],
+    "momentum_periods": [1, 3, 5, 10, 20],
+    "lag_periods": [1, 2, 3, 5, 10]
+  },
+  "data_preprocessing": {
+    "fill_method": "forward",
+    "max_missing_pct": 0.1,
+    "outlier_threshold": 3.0,
+    "min_date": "2020-01-01",
+    "max_date": null
+  },
+  "target_variables": {
+    "primary": {
+      "asset": "lme_copper_price",
+      "transformation": "pct_change",
+      "horizon": 1
+    },
+    "secondary": [
+      {
+        "asset": "lme_aluminum_price", 
+        "transformation": "pct_change",
+        "horizon": 1
+      },
+      {
+        "asset": "lme_zinc_price",
+        "transformation": "pct_change", 
+        "horizon": 1
+      }
+    ]
+  }
+}
